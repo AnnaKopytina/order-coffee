@@ -180,3 +180,39 @@ form.addEventListener('submit', (e) => {
         if (e.target === overlay) overlay.remove();
     };
 });
+
+function addExtraField(container) {
+    const label = document.createElement('label');
+    label.classList.add('field');
+
+    const span = document.createElement('span');
+    span.textContent = 'И еще вот что';
+    span.style.display = 'block';
+
+    const textarea = document.createElement('textarea');
+    textarea.name = 'extra-info';
+    textarea.classList.add('extra-textarea');
+    textarea.style.width = '100%';
+    textarea.style.marginTop = '10px';
+
+    label.appendChild(span);
+    label.appendChild(textarea);
+    container.appendChild(label);
+}
+
+function highlightKeywords(text, targetElement) {
+    const keywords = ['срочно', 'быстрее', 'побыстрее', 'скорее', 'поскорее', 'очень нужно'];
+    const regex = new RegExp(`(${keywords.join('|')})`, 'gi');
+    const parts = text.split(regex);
+
+    for (const part of parts) {
+        if (keywords.includes(part.toLowerCase())) {
+            const b = document.createElement('b');
+            b.textContent = part;
+            targetElement.appendChild(b);
+        } else {
+            const textNode = document.createTextNode(part);
+            targetElement.appendChild(textNode);
+        }
+    }
+}
