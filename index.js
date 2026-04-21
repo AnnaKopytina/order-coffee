@@ -33,6 +33,16 @@ document.querySelector('.add-button').addEventListener('click', () => {
         refreshNumbers();
     });
 
+    const newTextarea = newBeverage.querySelector('textarea');
+    const newDisplay = newBeverage.querySelector('.textarea-output');
+    newTextarea.value = '';
+    newDisplay.textContent = '';
+
+    newTextarea.addEventListener('input', () => {
+        newDisplay.textContent = '';
+        highlightKeywords(newTextarea.value, newDisplay);
+    });
+
     lastBeverage.after(newBeverage);
     refreshNumbers();
 });
