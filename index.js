@@ -139,21 +139,22 @@ form.addEventListener('submit', (e) => {
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
 
-    ['Напиток', 'Молоко', 'Дополнительно'].forEach(text => {
+    const headers = ['Напиток', 'Молоко', 'Дополнительно', 'Пожелания'];
+    for (const text of headers) {
         const th = document.createElement('th');
         th.textContent = text;
         th.style.border = '1px solid #ddd';
         th.style.padding = '8px';
         th.style.backgroundColor = '#f9f9f9';
         headerRow.appendChild(th);
-    });
+    }
     thead.appendChild(headerRow);
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
     const beverages = document.querySelectorAll('.beverage');
 
-    beverages.forEach(bev => {
+    for (const bev of beverages) {
         const row = document.createElement('tr');
 
         const drinkCell = document.createElement('td');
@@ -169,14 +170,19 @@ form.addEventListener('submit', (e) => {
             .map(cb => cb.parentElement.querySelector('span').textContent);
         extrasCell.textContent = checkedExtras.join(', ') || 'нет';
 
-        [drinkCell, milkCell, extrasCell].forEach(cell => {
+        const wishesCell = document.createElement('td');
+        const textarea = bev.querySelector('textarea');
+        highlightKeywords(textarea.value, wishesCell);
+
+        const cells = [drinkCell, milkCell, extrasCell, wishesCell];
+        for (const cell of cells) {
             cell.style.border = '1px solid #ddd';
             cell.style.padding = '8px';
             row.appendChild(cell);
-        });
+        }
 
         tbody.appendChild(row);
-    });
+    }
     table.appendChild(tbody);
 
     modal.appendChild(closeBtn);
