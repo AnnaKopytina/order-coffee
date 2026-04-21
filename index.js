@@ -1,6 +1,7 @@
 let beverageCount = 1;
 
 const firstBeverage = document.querySelector('.beverage');
+addExtraField(firstBeverage);
 addRemoveButton(firstBeverage);
 refreshNumbers();
 
@@ -182,22 +183,34 @@ form.addEventListener('submit', (e) => {
 });
 
 function addExtraField(container) {
+    const div = document.createElement('div');
+    div.classList.add('field');
+
     const label = document.createElement('label');
-    label.classList.add('field');
+    label.style.display = 'block';
 
     const span = document.createElement('span');
     span.textContent = 'И еще вот что';
     span.style.display = 'block';
 
     const textarea = document.createElement('textarea');
-    textarea.name = 'extra-info';
-    textarea.classList.add('extra-textarea');
     textarea.style.width = '100%';
     textarea.style.marginTop = '10px';
 
+    const outputDiv = document.createElement('div');
+    outputDiv.classList.add('textarea-output');
+    outputDiv.style.marginTop = '10px';
+
+    textarea.addEventListener('input', () => {
+        outputDiv.textContent = '';
+        highlightKeywords(textarea.value, outputDiv);
+    });
+
     label.appendChild(span);
     label.appendChild(textarea);
-    container.appendChild(label);
+    div.appendChild(label);
+    div.appendChild(outputDiv);
+    container.appendChild(div);
 }
 
 function highlightKeywords(text, targetElement) {
